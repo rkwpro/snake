@@ -1,6 +1,6 @@
 <template>
 <div ref="div">
-    <canvas ref="canvas"></canvas>
+    <canvas ref="canvas" tabindex="0"></canvas>
 </div>
 
 </template>
@@ -36,7 +36,7 @@ div {
 }
 canvas{
     background-color: #aad751;
-    /* height: 80%;
-    width: 80%; */
+    height: auto;
+    width: auto;
 }
 </style>

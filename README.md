@@ -1,5 +1,5 @@
 # snake
-
+我有点困了,所以这个版本是个半成品 ——v0.1
 ## Project setup
 ```
 npm install
