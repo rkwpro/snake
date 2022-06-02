@@ -2,11 +2,11 @@
 <div class="score-board">
 <div class="apple">
     <img src="https://app2468.acapp.acwing.com.cn/static/images/apple.png" alt="">
-    <div>0</div>
+    <div>{{ $store.state.score }}</div>
 </div>
 <div class="cup">
     <img src="https://app2468.acapp.acwing.com.cn/static/images/cup.png" alt="" >
-   <div>0</div>
+   <div>{{ $store.state.record }}</div>
 </div>
 </div>
 

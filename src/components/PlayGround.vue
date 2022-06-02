@@ -1,9 +1,13 @@
 <template>
-<div>
-<score-board>
+<div style="margin-top:0%">
+
+<score-board  >
    
 </score-board>
- <game-map></game-map>
+ <game-map>
+
+ </game-map>
+
 </div>
 </template>
 
@@ -28,6 +32,8 @@ div{
         height: 100%;
         width: 100%;
     background-color: #578A34;
+
 }
+
 
 </style>

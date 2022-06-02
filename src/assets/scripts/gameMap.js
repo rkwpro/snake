@@ -1,17 +1,20 @@
 import { rkwGameObj } from "./rkwGameObj";
 import { Snake } from "./snake";
+// import { Store } from "vuex";
 export class GameMap extends rkwGameObj{
-    constructor(ctx,parent){
+    constructor(ctx,parent,store){
         super();
         this.ctx = ctx;
         this.parent = parent;
+        this.store = store;
         this.L = 0;
         this.snake =new Snake(this.ctx,this);
         this.directions = []; //指令缓存队列 
-        this.status = "waiting";
+        this.status = "waiting";//waiting -> playing
 
     }
     start(){
+        
         this.ctx.canvas.focus();
         this.ctx.canvas.addEventListener('keydown',e => {
             
@@ -61,6 +64,16 @@ export class GameMap extends rkwGameObj{
         
      
     }
+    win(){
+        this.snake.color ="white";
+        this.status = "win";
+        this.store.commit('updateRestart',true);
+    }
+    lose(){
+        this.snake.color ="white";
+        this.status = "lose";
+        this.store.commit('updateRestart',true);
+    }
     render() {
         let color_even = "#AAD751",color_odd = "#A2D149";
 
@@ -78,6 +91,19 @@ export class GameMap extends rkwGameObj{
             }
         }
         
+    }
+    restart(){
+       
+        this.store.state.score = 0;
+        this.status = "waiting";
+        this.snake.destroy();
+        // 新蛇
+        this.snake = new Snake(this.ctx,this);
+
+        // this.snake = new snake(this.ctx,this);
+        // console.log("ok");
+        this.store.commit('updateRestart',false);
+        this.ctx.canvas.focus();
     }
     update_size(){
         this.L = Math.min(this.parent.clientWidth / 17 , this.parent.clientHeight / 15);

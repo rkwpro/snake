@@ -19,15 +19,19 @@ export class rkwGameObj{
 
     }
     destroy(){
+       
         this.on_destroy();
-
+        // RKW_GAME_OBJS =[];
         for(let i in RKW_GAME_OBJS)
         {
             const obj = RKW_GAME_OBJS[i];
+            console.log(obj);
             if(obj === this){
-                RKW_GAME_OBJS.slice(i,1);//从i开始删除一个
+                console.log("执行删除");
+                RKW_GAME_OBJS.splice(i,1);//从i开始删除一个
                 break;
             }
+            
             
         }
         
