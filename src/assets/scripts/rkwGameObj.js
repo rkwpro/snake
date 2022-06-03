@@ -13,7 +13,6 @@ export class rkwGameObj{
 
     }
     update(){
-
     }
     on_destroy(){
 

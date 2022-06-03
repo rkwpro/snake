@@ -16,6 +16,7 @@ export class GameMap extends rkwGameObj{
     start(){
         
         this.ctx.canvas.focus();
+        // this.ctx.canvas.addEventListener
         this.ctx.canvas.addEventListener('keydown',e => {
             
             if(e.key === "w" || e.key === "ArrowUp" || e.key === "W"){
@@ -37,24 +38,61 @@ export class GameMap extends rkwGameObj{
                 this.directions.push(3);
                 e.preventDefault();
             }
-                
-            // 防止用户重复按键，去除多余的按键次数
-            let k = this.directions.length;
-            if(k > 1 && this.directions[k - 1] === this.directions[k-2]){
-                this.directions.pop();
-            }
-            // 缓冲区只保留最新的两次不重复按键，提高用户体验
-            while(this.directions.length > 2){
-                this.directions.splice(0,1);//从队列头开始去除
-            }
-            if(this.status === "waiting" && k && this.directions[0] !== 3){
-                this.status = "playing";
-                this.snake.direction = this.directions[0];
-            }
+               this.on_start(); 
+          
 
         });
     }
+    on_start(){
+          // 防止用户重复按键，去除多余的按键次数
+         if(this.status != "waiting"){
+                let k = this.directions.length;
+                if(k > 1 && this.directions[k - 1] === this.directions[k-2]){
+                    this.directions.pop();
+                }
+                // 缓冲区只保留最新的两次不重复按键，提高用户体验
+                while(this.directions.length > 2){
+                    this.directions.splice(0,1);//从队列头开始去除
+                }
+                if(this.status === "waiting" && k && this.directions[0] !== 3){
+                    this.status = "playing";
+                    this.snake.direction = this.directions[0];
+                }
+        
+         }
+                 
+         
 
+    }
+    up(){
+        //var supportsVibrate = "vibrate" in navigator;
+        navigator.vibrate(40);
+        this.ctx.canvas.focus();
+        this.directions.push(0);
+      //  this.start();
+        this.on_start(); 
+    }
+    down(){
+        navigator.vibrate(40);
+        this.ctx.canvas.focus();
+        this.directions.push(2);
+      //  this.start();
+        this.on_start(); 
+    }
+    left(){
+        navigator.vibrate(40);
+        this.ctx.canvas.focus();
+        this.directions.push(3);
+      //  this.start();
+        this.on_start(); 
+    }
+    right(){
+        navigator.vibrate(40);
+        this.ctx.canvas.focus();
+        this.directions.push(1);
+      //  this.start();
+        this.on_start(); 
+    }
     update(){
         // if(this.status === "playing")
         // {
@@ -95,15 +133,20 @@ export class GameMap extends rkwGameObj{
     restart(){
        
         this.store.state.score = 0;
-        this.status = "waiting";
+
+        this.status = "playing";
         this.snake.destroy();
         // 新蛇
+        
         this.snake = new Snake(this.ctx,this);
 
         // this.snake = new snake(this.ctx,this);
         // console.log("ok");
         this.store.commit('updateRestart',false);
         this.ctx.canvas.focus();
+        while(this.directions.length ){
+            this.directions.splice(0,1);//从队列头开始去除
+        }
     }
     update_size(){
         this.L = Math.min(this.parent.clientWidth / 17 , this.parent.clientHeight / 15);
